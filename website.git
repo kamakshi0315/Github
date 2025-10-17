@@ -1,0 +1,51 @@
+import { BrowserRouter as Router, Routes, Route, Link, Outlet } from "react-router-dom";
+
+function Home() {
+  return <h3>🏠 Welcome to the Home Page</h3>;
+}
+
+function Profile() {
+  return <h3>👤 This is the Profile Page</h3>;
+}
+
+function Settings() {
+  return <h3>⚙️ This is the Settings Page</h3>;
+}
+
+function Dashboard() {
+  return (
+    <div style={{ padding: "20px" }}>
+      <h2>📊 Dashboard</h2>
+      <nav style={{ marginTop: "10px" }}>
+        <Link to="profile" style={{ marginRight: "10px" }}>Profile</Link>
+        <Link to="settings">Settings</Link>
+      </nav>
+
+      {/* Nested routes will render here */}
+      <div style={{ marginTop: "20px" }}>
+        <Outlet />
+      </div>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <nav style={{ background: "#eee", padding: "10px" }}>
+        <Link to="/" style={{ marginRight: "10px" }}>Home</Link>
+        <Link to="/dashboard">Dashboard</Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+
+        {/* Parent route with nested child routes */}
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="profile" element={<Profile />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
+}
